@@ -4,6 +4,8 @@ package kodlama.io.hrms.entities.concretes;
 import java.util.List;
 
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,31 +23,32 @@ public class Employer {
 	@javax.persistence.Column(name="employer_id")
 	private int id;
 	
-	@javax.validation.constraints.NotNull
+	@NotNull
 	@javax.persistence.Column(name="company_name")
 	private String companyName;
 	
-	@javax.validation.constraints.NotNull
+	@NotNull
 	@javax.persistence.Column(name="website")
 	private String webSite;
 	
-	@javax.validation.constraints.NotNull
+	@NotNull
 	@javax.persistence.Column(name="email")
+	@Email
 	private String email;
 	
-	@javax.validation.constraints.NotNull
+	@NotNull
 	@javax.persistence.Column(name="phone_number")
 	private String phoneNumber;
 	
-	@javax.validation.constraints.NotNull
+	@NotNull
 	@javax.persistence.Column(name="password")
 	private String password;
 	
-	@javax.validation.constraints.NotNull
+	@NotNull
 	@javax.persistence.Column(name="retype_password")
 	private String reTypePassword;
 	
-	@javax.validation.constraints.NotNull
+	@NotNull
 	@javax.persistence.Column(name="is_activated")
 	private boolean isActivated;
 	

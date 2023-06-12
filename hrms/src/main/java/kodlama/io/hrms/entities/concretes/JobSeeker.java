@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,6 +37,7 @@ public class JobSeeker {
 	
 	@NotNull
 	@Column(name="email")
+	@Email
 	private String email;
 	
 	@NotNull
