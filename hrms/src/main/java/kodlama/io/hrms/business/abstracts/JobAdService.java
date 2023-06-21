@@ -30,4 +30,8 @@ public interface JobAdService {
 	public SuccessResult deleteByAdId(int adId);
 	
 	public DataResult<List<JobAd>> getAllByPage(int pageNo, int pageSize);
+	
+	public DataResult<List<JobAd>> getAllActiveAdsBySalaryDescending();
+	
+	public SuccessResult updateJobAd(int IdForTheJobAdToUpdate, JobAd UpdatedJobAd);
 }

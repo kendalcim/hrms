@@ -19,6 +19,8 @@ public interface JobAdRepository extends JpaRepository<JobAd, Integer> {
 	public List<JobAd> findByJobPositionNameAndIsActiveTrue(String jobPositionName);
 
 	public List<JobAd> findByJobPositionName(String positionName);
+
+	public List<JobAd> findByIsActiveTrueOrderByMinimumSalaryDesc();
 	
 	
 }

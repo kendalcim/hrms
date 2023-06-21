@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import kodlama.io.hrms.business.abstracts.JobAdService;
+import kodlama.io.hrms.core.utilities.mappers.ModelMapperService;
 import kodlama.io.hrms.core.utilities.results.DataResult;
 import kodlama.io.hrms.core.utilities.results.SuccessDataResult;
 import kodlama.io.hrms.core.utilities.results.SuccessResult;
@@ -29,12 +30,24 @@ public class JobAdManager implements JobAdService {
 	private JobAdRepository jobAdRepository;
 	
 	@Autowired
+	private ModelMapperService modelMapper;
+	
+	@Autowired
 	private EmployerRepository employerRepository;
 	
 	@Override
 	public void add(JobAd jobAd) {
 		jobAdRepository.save(jobAd);
 	}
+	
+	@Override
+	public SuccessResult updateJobAd(int IdForTheJobAdToUpdate, JobAd updatedJobAd) {
+	JobAd existingjobAd	= jobAdRepository.findById(IdForTheJobAdToUpdate).orElseThrow(()-> new IllegalArgumentException("No ad found with the given Id"));
+		modelMapper.forRequests().map(updatedJobAd, existingjobAd);
+		jobAdRepository.save(existingjobAd);
+		return new SuccessResult("Job ad is updated successfully");
+	}
+	
 	@Override
 	public List<JobAd> listActiveAds() {
 		return jobAdRepository.findByIsActiveTrue();
@@ -101,6 +114,13 @@ public class JobAdManager implements JobAdService {
 		PageRequest pageable = PageRequest.of(pageNo-1, pageSize);
 		
 		return new SuccessDataResult<List<JobAd>>(this.jobAdRepository.findAll(pageable).getContent(), 
-				"Ads listed by " + pageSize + "per page");
+				"Ads listed " + pageSize + "per page");
 	}
+	
+	public DataResult<List<JobAd>> getAllActiveAdsBySalaryDescending(){
+		List<JobAd> descendingOrderJobAds = jobAdRepository.findByIsActiveTrueOrderByMinimumSalaryDesc();
+		return new SuccessDataResult<List<JobAd>>(descendingOrderJobAds,"Ads are listed by salary");
+		
+	}
+
 }
